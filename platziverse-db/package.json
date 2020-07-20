@@ -4,6 +4,7 @@
   "description": "A simple IoT Platform - DB Module",
   "main": "index.js",
   "scripts": {
+    "setup": "DEBUG=platziverse:* node setup.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,6 +18,9 @@
   },
   "homepage": "https://github.com/Alejandro2134/platziverse#readme",
   "dependencies": {
+    "debug": "^4.1.1",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.3"
   }
 }
