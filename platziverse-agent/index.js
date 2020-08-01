@@ -69,13 +69,13 @@ class PlatziverseAgent extends EventEmitter {
                         }
 
                         for(let [metric, fn] of this._metrics) {
-                            if(fn.legnth == 1) {
+                            if(fn.length === 1) {
                                 fn = util.promisify(fn);
                             }
     
                             message.metrics.push({
                                 type: metric,
-                                vale: await Promise.resolve(fn())
+                                value: await Promise.resolve(fn())
                             })
                         }
     
