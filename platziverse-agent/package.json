@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/Alejandro2134/platziverse/issues"
   },
-  "homepage": "https://github.com/Alejandro2134/platziverse#readme"
+  "homepage": "https://github.com/Alejandro2134/platziverse#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "defaults": "^1.0.3",
+    "mqtt": "^4.1.0",
+    "uuid": "^8.3.0"
+  }
 }
