@@ -2,34 +2,99 @@
 
 const debug = require('debug')('platziverse:api:routes');
 const express = require('express');
+const db = require('platziverse-db');
+
+const config = require('./config');
 
 const api = express.Router();
 
-api.get('/agents', (req, res) => {
-    debug('A request has come to /agents');
-    res.send({});
+let services, Agent, Metric;
+
+api.use(async (req, res, next) => {
+    if(!services) {
+        debug('Connecting to database');
+        try {
+            services = await db(config.db);
+        } catch (err) {
+            return next(err);
+        }
+        
+        Agent = services.Agent;
+        Metric = services.Metric;
+    }
+    next();
 })
 
-api.get('/agent/:uuid', (req, res, next) => {
-    const { uuid } = req.params;
+api.get('/agents', async (req, res, next) => {
+    debug('A request has come to /agents');
 
-    if(uuid !== 'yyy') {
-        return next(new Error('Agent not found'));
+    let agents = [];
+    try {
+        agents = await Agent.findConnected();
+    } catch (err) {
+        return next(err);
     }
 
-    res.send({
-        uuid
-    })
+    res.send(agents);
 })
 
-api.get('/metrics/:uuid', (req, res) => {
+api.get('/agent/:uuid', async (req, res, next) => {
     const { uuid } = req.params;
-    res.send({ uuid });
+
+    debug(`equest to /agent/${uuid}`);
+
+    let agent;
+
+    try {   
+        agent = await Agent.findByUuid(uuid);
+    } catch (err) {
+        return next(err);
+    }
+
+    if(!agent) {
+        return next(new Error(`Agent not found with uuid ${uuid}`));
+    }
+
+    res.send(agent);
 })
 
-api.get('/metrics/:uuid/:type', (req, res) => {
+api.get('/metrics/:uuid', async (req, res, next) => {
+    const { uuid } = req.params;
+
+    debug(`request to /metrics/${uuid}`);
+
+    let metrics = [];
+
+    try {
+        metrics = await Metric.findByAgentUuid(uuid);
+    } catch (err) {
+        return next(err);
+    }
+
+    if(!metrics || metrics.length === 0) {
+        return next(new Error(`Metrics not found for agent with uuid ${uuid}`));
+    }
+
+    res.send(metrics);
+})
+
+api.get('/metrics/:uuid/:type', (req, res, next) => {
     const { uuid, type } = req.params;
-    res.send({ uuid, type });
+
+    debug(`request yo /metrics/${uuid}/${type}`);
+
+    let metrics = [];
+    try {
+        metrics = await Metric.findByTypeAgentUuid(type, uuid);
+    } catch (err) {
+        return next(err);
+    }
+
+    if(!metrics || metrics.length === 0) {
+        return next(new Error(`Metrics (${type}) not found for agent with uuid ${uuid}`));
+    }
+
+    res.send(metrics);
 })
 
 module.exports = api;
