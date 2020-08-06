@@ -1,29 +1,32 @@
 {
   "name": "platziverse-web",
   "version": "1.0.0",
-  "description": "A simple IoT Platform - Web Dashboard",
+  "description": "A Simple IoT Platform - Web Dashboard",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
-    "start-dev": "DEBUG=platziverse:* nodemon server.js"
+    "start-dev": "DEBUG=platziverse:* nodemon server.js",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Alejandro2134/platziverse.git"
+    "url": "git+https://github.com/platzi/platziverse.git"
   },
-  "author": "Alejandro2134",
+  "author": "Julian Duque <julianduquej@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Alejandro2134/platziverse/issues"
+    "url": "https://github.com/platzi/platziverse/issues"
   },
-  "homepage": "https://github.com/Alejandro2134/platziverse#readme",
+  "homepage": "https://github.com/platzi/platziverse#readme",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^1.11.0",
+    "standard": "^10.0.3"
   },
   "dependencies": {
-    "chalk": "^4.1.0",
-    "debug": "^4.1.1",
-    "express": "^4.17.1",
-    "socket.io": "^2.3.0"
+    "chalk": "^2.1.0",
+    "debug": "^3.0.0",
+    "express": "^4.15.4",
+    "platziverse-agent": "file:../platziverse-agent",
+    "socket.io": "^2.0.3"
   }
 }

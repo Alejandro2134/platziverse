@@ -1,59 +1,63 @@
 'use strict'
 
 module.exports = function setupAgent (AgentModel) {
-    async function createOrUpdate (agent) {
-        const cond = {
-            where: {
-                uuid: agent.uuid
-            }
-        }
-
-        const existingAgent = await AgentModel.findOne(cond);
-
-        if(existingAgent) {
-            const updated = await AgentModel.update(agent, cond);
-            return updated ? AgentModel.findOne(cond) : existingAgent;
-        }
-
-        const result = await AgentModel.create(agent);
-        return result.toJSON();
+  async function createOrUpdate (agent) {
+    const cond = {
+      where: {
+        uuid: agent.uuid
+      }
     }
 
-    function findById (id) {
-        return AgentModel.findById(id);
+    const existingAgent = await AgentModel.findOne(cond)
+
+    if (existingAgent) {
+      const updated = await AgentModel.update(agent, cond)
+      return updated ? AgentModel.findOne(cond) : existingAgent
     }
 
-    function findByUuid (uuid) {
-        return AgentModel.findOne({
-            where: { uuid }
-        })
-    }
+    const result = await AgentModel.create(agent)
+    return result.toJSON()
+  }
 
-    function findAll () {
-        return AgentModel.findAll();
-    }
+  function findById (id) {
+    return AgentModel.findById(id)
+  }
 
-    function findConnected () {
-        return AgentModel.findAll({
-            where: { connected: true }
-        })
-    }
+  function findByUuid (uuid) {
+    return AgentModel.findOne({
+      where: {
+        uuid
+      }
+    })
+  }
 
-    function findByUsername (username) {
-        return AgentModel.findAll({
-            where: {
-                username,
-                connected: true
-            }
-        })
-    }
+  function findAll () {
+    return AgentModel.findAll()
+  }
 
-    return {
-        createOrUpdate,
-        findById,
-        findByUuid,
-        findAll,
-        findConnected,
-        findByUsername
-    }
+  function findConnected () {
+    return AgentModel.findAll({
+      where: {
+        connected: true
+      }
+    })
+  }
+
+  function findByUsername (username) {
+    return AgentModel.findAll({
+      where: {
+        username,
+        connected: true
+      }
+    })
+  }
+
+  return {
+    createOrUpdate,
+    findById,
+    findByUuid,
+    findAll,
+    findConnected,
+    findByUsername
+  }
 }

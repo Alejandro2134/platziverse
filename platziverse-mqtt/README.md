@@ -4,13 +4,13 @@
 
 ``` js
 {
-    agent: {
-        uuid, // auto generar
-        username, // definir por configuración
-        name, // definir por configuración
-        hostname, // obtener del sistema operativo
-        pid // obtener del proceso
-    }
+  agent: {
+    uuid, // auto generar
+    username, // definir por configuración
+    name, // definir por configuración
+    hostname, // obtener del sistema operativo
+    pid // obtener del proceso
+  }
 }
 ```
 
@@ -18,9 +18,9 @@
 
 ``` js
 {
-    agent: {
-        uuid
-    }
+  agent: {
+    uuid
+  }
 }
 ```
 
@@ -28,13 +28,13 @@
 
 ``` js
 {
-    agent,
-    metrics: [
-        {
-            type,
-            value
-        }
-    ],
-    timestamp // generar cuando creamos el mensaje
+  agent,
+  metrics: [
+    {
+      type,
+      value
+    }
+  ],
+  timestamp // generar cuando creamos el mensaje
 }
 ```
