@@ -1,6 +1,10 @@
 <template>
   <div>
-    <metric uuid="d2fe3ee2-aea5-4413-bd86-cc7f42a75d20" type="promiseMetric"></metric>
+    <metric 
+      uuid="bb4a9d16-dace-46dc-b5f2-7468badfe20f" 
+      type="callbackMetric"
+      :socket="socket" 
+    ></metric>
     <agent
       v-for="agent in agents"
       :uuid="agent.uuid"
