@@ -75,9 +75,10 @@
 
 <script>
 const request = require('request-promise-native')
-const { serverHost } = require('../config')
+
 module.exports = {
   props: [ 'uuid', 'socket' ],
+
   data() {
     return {
       name: null,
@@ -89,17 +90,21 @@ module.exports = {
       metrics: []
     }
   },
+
   mounted() {
     this.initialize()
   },
+
   methods: {
     async initialize() {
       const { uuid } = this
+
       const options = {
         method: 'GET',
-        url: `${serverHost}/agent/${uuid}`,
+        url: `http://localhost:8080/agent/${uuid}`,
         json: true
       }
+
       let agent
       try {
         agent = await request(options)
@@ -107,37 +112,47 @@ module.exports = {
         this.error = e.error.error
         return
       }
+
       this.name = agent.name
       this.hostname = agent.hostname
       this.connected = agent.connected
       this.pid = agent.pid
+
       this.loadMetrics()
     },
+
     async loadMetrics () {
       const { uuid } = this
+
       const options = {
         method: 'GET',
-        url: `${serverHost}/metrics/${uuid}`,
+        url: `http://localhost:8080/metrics/${uuid}`,
         json: true
       }
+
       let metrics
       try {
         metrics = await request(options)
-      } catch(e) {
+      } catch (e) {
         this.error = e.error.error
         return
       }
+
       this.metrics = metrics
+
       this.startRealtime()
     },
+
     startRealtime () {
       const { uuid, socket } = this
+
       socket.on('agent/disconnected', payload => {
         if (payload.agent.uuid === uuid) {
           this.connected = false
         }
       })
     },
+
     toggleMetrics() {
       this.showMetrics = this.showMetrics ? false : true
     }
