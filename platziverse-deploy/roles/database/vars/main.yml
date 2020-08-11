@@ -2,7 +2,7 @@ postgresql_database:
   - name: platziverse
     owner: platzi
     hstore: yes
-postgresql_users:
+postgresql_user:
   - name: platzi
     pass: platzi
     encrypted: no
