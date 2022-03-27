@@ -19,7 +19,7 @@
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.20",
     "longjohn": "^0.2.12",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "moment": "^2.27.0",
     "platziverse-agent": "file:../platziverse-agent"
   }
